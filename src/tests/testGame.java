@@ -1,9 +1,7 @@
 package tests;
 
-import static org.junit.Assert.*;
 import junit.framework.Assert;
 import game.Court;
-
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -37,42 +35,42 @@ public class testGame {
 	//Tests if the velocity input from the mouse-click is between 0 and 100.
 	//Max power = 10
 	public void testInitialVelocities() {
-		
+
 		//Power of 5 and an angle of 45
-		court.setPower(5);
 		court.getBball().setLaunchAngle(45);
+		court.setPower(5);
 		double power = court.getPower();
 		double xVelocity = court.getBball().getxVelocity();
 		double yVelocity = court.getBball().getyVelocity();
-		double actualXVelocity = 5 * Math.cos(45);
-		double actualYVelocity = 5 * Math.sin(45);
+		double expectedXVelocity = 5 * Math.cos(45);
+		double expectedYVelocity = 5 * Math.sin(45);
 		
-		Assert.assertEquals(xVelocity, actualXVelocity);
-		Assert.assertEquals(yVelocity, actualYVelocity);
+		Assert.assertEquals(xVelocity, expectedXVelocity);
+		Assert.assertEquals(yVelocity, expectedYVelocity);
 		
 		//Power of 8 and an angle of 80
-		court.setPower(8);
 		court.getBball().setLaunchAngle(80);
+		court.setPower(8);
 		power = court.getPower();
 		xVelocity = court.getBball().getxVelocity();
 		yVelocity = court.getBball().getyVelocity();
-		actualXVelocity = 8 * Math.cos(80);
-		actualYVelocity = 8 * Math.sin(80);
+		expectedXVelocity = 8 * Math.cos(80);
+		expectedYVelocity = 8 * Math.sin(80);
 		
-		Assert.assertEquals(xVelocity, actualXVelocity);
-		Assert.assertEquals(yVelocity, actualYVelocity);
+		Assert.assertEquals(xVelocity, expectedXVelocity);
+		Assert.assertEquals(yVelocity, expectedYVelocity);
 		
 		//Power of 2 and an angle of 90
-		court.setPower(2);
 		court.getBball().setLaunchAngle(90);
+		court.setPower(2);
 		power = court.getPower();
 		xVelocity = court.getBball().getxVelocity();
 		yVelocity = court.getBball().getyVelocity();
-		actualXVelocity = 2 * Math.cos(90);
-		actualYVelocity = 2 * Math.sin(90);
+		expectedXVelocity = 2 * Math.cos(90);
+		expectedYVelocity = 2 * Math.sin(90);
 		
-		Assert.assertEquals(xVelocity, actualXVelocity);
-		Assert.assertEquals(yVelocity, actualYVelocity);
+		Assert.assertEquals(xVelocity, expectedXVelocity);
+		Assert.assertEquals(yVelocity, expectedYVelocity);
 	}
 	
 	

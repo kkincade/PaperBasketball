@@ -1,28 +1,18 @@
 package game;
 
 public class Hoop {
-	private int positionX;
-	private int positionY;
+	private static final int POSITION_X = 656;
+	private static final int POSITION_Y = 392;
 	
 	public Hoop() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public int getPositionX() {
-		return positionX;
-	}
-
-	public void setPositionX(int positionX) {
-		this.positionX = positionX;
+		return POSITION_X;
 	}
 
 	public int getPositionY() {
-		return positionY;
+		return POSITION_Y;
 	}
-
-	public void setPositionY(int positionY) {
-		this.positionY = positionY;
-	}
-	
 }

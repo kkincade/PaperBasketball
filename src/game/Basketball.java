@@ -8,11 +8,18 @@ public class Basketball {
 	private double xVelocity;
 	private double yVelocity;
 	private double launchAngle;
+	private static final double BALL_POSITION_X1 = 408;
+	private static final double BALL_POSITION_Y1 = 434;
+	private static final double BALL_POSITION_X2 = 508;
+	private static final double BALL_POSITION_Y2 = 429;
+	private static final double BALL_POSITION_X3 = 178;
+	private static final double BALL_POSITION_Y3 = 447;
+	
 	
 	//Default Constructor
 	public Basketball() {
-		xPosition = 0.0;
-		yPosition = 0.0;
+		xPosition = BALL_POSITION_X1;
+		yPosition = BALL_POSITION_Y1;
 		launchAngle = 0.0;
 		time = 0;
 	}
