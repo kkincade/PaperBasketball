@@ -1,7 +1,6 @@
 package game;
 
 public class Basketball {
-	private static final double ACCERLERATIONY = 9.81;
 	private double time;
 	private double xPosition;
 	private double yPosition;
@@ -80,9 +79,4 @@ public class Basketball {
 	public void setLaunchAngle(double launchAngle) {
 		this.launchAngle = launchAngle;
 	}
-
-	public static double getAccerlerationy() {
-		return ACCERLERATIONY;
-	}
-
 }

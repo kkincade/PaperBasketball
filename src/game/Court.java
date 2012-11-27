@@ -16,10 +16,15 @@ public class Court extends JPanel {
 	private Hoop hoop;
 	private double power;
 	private Image courtImage;
+	private boolean madeShot;
+	private double time;
+	private static final double ACCERLERATIONY = 9.81;
 	
 	//Constructor
 	public Court() {
 		super();
+		time = 0;
+		madeShot = false;
 		scoreboard = new Scoreboard();
 		bball = new Basketball();
 		player = new Player();
@@ -59,9 +64,10 @@ public class Court extends JPanel {
 		return yVelocity;
 	}
 	//**************************************************************
-	
-	public boolean checkShot() {
-		return false;
+	// Shoots the basketball
+	public void shoot(double angle, double power) {
+		bball.setyPosition(bball.getyPosition() + bball.getyVelocity()*time + .5*ACCERLERATIONY*Math.pow(time, 2));
+		
 	}
 	
 	public boolean checkWin(int score) {
@@ -120,6 +126,14 @@ public class Court extends JPanel {
 
 	public void setHoop(Hoop hoop) {
 		this.hoop = hoop;
+	}
+
+	public boolean isMadeShot() {
+		return madeShot;
+	}
+
+	public void setMadeShot(boolean madeShot) {
+		this.madeShot = madeShot;
 	}
 
 }

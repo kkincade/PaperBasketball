@@ -79,15 +79,13 @@ public class testGame {
 	public void testMakeBasket() {
 		court.setPower(70/Math.sqrt(2));
 		court.getBball().setLaunchAngle(45);
-		court.getPlayer().shoot(court.getBball().getLaunchAngle(), court.getPower());
-		Assert.assertEquals(court.getHoop().getPositionY(), court.getBball().getyPosition());
-		Assert.assertEquals(court.getHoop().getPositionX(), court.getBball().getxPosition());
+		court.shoot(court.getBball().getLaunchAngle(), court.getPower());
+		Assert.assertTrue(court.isMadeShot());
 		
 		court.setPower(35/Math.cos(60));
 		court.getBball().setLaunchAngle(60);
-		court.getPlayer().shoot(court.getBball().getLaunchAngle(), court.getPower());
-		Assert.assertEquals(court.getHoop().getPositionY(), court.getBball().getyPosition());
-		Assert.assertEquals(court.getHoop().getPositionX(), court.getBball().getxPosition());
+		court.shoot(court.getBball().getLaunchAngle(), court.getPower());
+		Assert.assertTrue(court.isMadeShot());
 	}
 	
 	@Test
