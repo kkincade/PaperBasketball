@@ -10,13 +10,6 @@ public class Scoreboard {
 		timeRemaining = 90;
 	}
 
-
-
-	public void decrementTime() {
-		
-	}
-
-
 	//* Getters and Setters ***************************************
 	public int getTimeRemaining() {
 		return timeRemaining;

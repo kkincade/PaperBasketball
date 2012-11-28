@@ -4,11 +4,11 @@ import java.awt.Color;
 import java.awt.Graphics;
 
 public class Basketball {
-	private double xPosition;
-	private double yPosition;
-	private double xVelocity;
-	private double yVelocity;
-	private double launchAngle;
+	private double x;
+	private double y;
+	private double Vx;
+	private double Vy;
+	private double angle;
 	private static final double BALL_POSITION_X1 = 401;
 	private static final double BALL_POSITION_Y1 = 384;
 	private static final double BALL_POSITION_X2 = 501;
@@ -16,66 +16,58 @@ public class Basketball {
 	private static final double BALL_POSITION_X3 = 171;
 	private static final double BALL_POSITION_Y3 = 397;
 	
-	
 	//Default Constructor
 	public Basketball() {
-		xPosition = BALL_POSITION_X1;
-		yPosition = BALL_POSITION_Y1;
-		launchAngle = 0.0;
+		x = BALL_POSITION_X1;
+		y = BALL_POSITION_Y1;
+		angle = 0.0;
 	}
 	
 	public void draw(Graphics g){
 		g.setColor(Color.cyan);
-		g.fillOval((int) xPosition, (int) yPosition, 20, 20);
+		g.fillOval((int) x, (int) y, 20, 20);
 	}
 	
-	public double calcPositionX(double time) {
-		return 0;
-	}
-	
-	public double calcPositionY(double time) {
-		return 0;
-	}
 
 	//* Getters and Setters********************************************
-	public double getxPosition() {
-		return xPosition;
+	public double getPositionX() {
+		return x;
 	}
 
-	public void setxPosition(double xPosition) {
-		this.xPosition = xPosition;
+	public void setPositionX(double x) {
+		this.x = x;
 	}
 
-	public double getyPosition() {
-		return yPosition;
+	public double getPositionY() {
+		return y;
 	}
 
-	public void setyPosition(double yPosition) {
-		this.yPosition = yPosition;
+	public void setPositionY(double y) {
+		this.y = y;
 	}
 
-	public double getxVelocity() {
-		return xVelocity;
+	public double getVelocityX() {
+		return Vx;
 	}
 
-	public void setxVelocity(double xVelocity) {
-		this.xVelocity = xVelocity;
+	public void setVelocityX(double Vx) {
+		this.Vx = Vx;
 	}
 
-	public double getyVelocity() {
-		return yVelocity;
+	public double getVelocityY() {
+		return Vy;
 	}
 
-	public void setyVelocity(double yVelocity) {
-		this.yVelocity = yVelocity;
+	public void setVelocityY(double Vy) {
+		this.Vy = Vy;
 	}
 
-	public double getLaunchAngle() {
-		return launchAngle;
+	public double getAngle() {
+		return angle;
 	}
 
-	public void setLaunchAngle(double launchAngle) {
-		this.launchAngle = launchAngle;
+	public void setAngle(double angle) {
+		this.angle = angle;
 	}
 
 	public static double getBallPositionX1() {

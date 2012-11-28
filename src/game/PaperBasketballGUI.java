@@ -15,13 +15,11 @@ import javax.swing.JMenuItem;
 public class PaperBasketballGUI extends JFrame implements MouseListener {
 	private JMenuItem exit;
 	private Court court;
-	private MouseSpy mouseSpy;
 
-	
+	//Constructor for the JFrame
 	public PaperBasketballGUI() {
 		court = new Court();
-		mouseSpy = new MouseSpy();
-		
+
 		//GUI
 		setSize(new Dimension(720, 560));
 		setTitle("Paper Basketball!");
@@ -31,39 +29,38 @@ public class PaperBasketballGUI extends JFrame implements MouseListener {
 		menuBar.add(createFileMenu());
 		add(court);
 		addMouseListener(this);
-		
 	}
-	
-	//* GUI components **************************************************
-		//Creates File menu
-		private JMenu createFileMenu() {
-			JMenu menu = new JMenu("File"); 
-			menu.add(createFileExitItem());
 
-			return menu;
-		}
-		
-		//Creates Exit option 
-		private JMenuItem createFileExitItem() {
-			exit = new JMenuItem("Exit");
-			class MenuItemListener implements ActionListener {
-				public void actionPerformed(ActionEvent e) {
-					System.exit(0);
-				}
+	//* GUI components **************************************************
+	//Creates File menu
+	private JMenu createFileMenu() {
+		JMenu menu = new JMenu("File"); 
+		menu.add(createFileExitItem());
+		return menu;
+	}
+
+	//Creates Exit option 
+	private JMenuItem createFileExitItem() {
+		exit = new JMenuItem("Exit");
+		class MenuItemListener implements ActionListener {
+			public void actionPerformed(ActionEvent e) {
+				System.exit(0);
 			}
-			exit.addActionListener(new MenuItemListener());
-			return exit;
 		}
-		
+		exit.addActionListener(new MenuItemListener());
+		return exit;
+	}
+
+	
 	public static void main(String[] args) {
 		PaperBasketballGUI pbGUI = new PaperBasketballGUI();
 		pbGUI.setVisible(true);
-		pbGUI.court.getBball().setLaunchAngle(60);
-		pbGUI.court.setPower(70);
+		pbGUI.court.getBball().setAngle(70);
+		pbGUI.court.setPower(63);
 		pbGUI.court.shoot();
 	}
-	
-	
+
+
 	//*Mouse Listener********************************************
 	public void mousePressed(MouseEvent event) { 
 		System.out.println("Mouse pressed. x = "
@@ -73,20 +70,17 @@ public class PaperBasketballGUI extends JFrame implements MouseListener {
 		System.out.println("Mouse released. x = "
 				+ event.getX() + " y = " + event.getY());
 	} 
-	public void mouseClicked(MouseEvent event)
-	{ 
+	public void mouseClicked(MouseEvent event) { 
 		System.out.println("Mouse clicked. x = "
 				+ event.getX() + " y = " + event.getY());
 	} 
-	public void mouseEntered(MouseEvent event)
-	{ 
-//		System.out.println("Mouse entered. x = "
-//				+ event.getX() + " y = " + event.getY());
+	public void mouseEntered(MouseEvent event) { 
+		//		System.out.println("Mouse entered. x = "
+		//				+ event.getX() + " y = " + event.getY());
 	} 
-	public void mouseExited(MouseEvent event)
-	{ 
-//		System.out.println("Mouse exited. x = "
-//				+ event.getX() + " y = " + event.getY());
+	public void mouseExited(MouseEvent event){ 
+		//		System.out.println("Mouse exited. x = "
+		//				+ event.getX() + " y = " + event.getY());
 	}
 
 }
