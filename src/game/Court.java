@@ -4,8 +4,13 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.MediaTracker;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.net.URL;
+
+
 import javax.swing.JPanel;
+import javax.swing.Timer;
 
 @SuppressWarnings("serial")
 public class Court extends JPanel {
@@ -17,17 +22,20 @@ public class Court extends JPanel {
 	private double power;
 	private Image courtImage;
 	private boolean madeShot;
-	private double time;
+	private int numberOfIterations;
 	private static final double ACCERLERATIONY = 9.81;
+	private Timer timer;
 	
 	//Constructor
 	public Court() {
 		super();
-		time = 0;
+		timer = new Timer(25, new TimerListener());
+		numberOfIterations = 0;
 		madeShot = false;
 		scoreboard = new Scoreboard();
 		bball = new Basketball();
 		player = new Player();
+		hoop = new Hoop();
 		setPower(0);
 		
 		MediaTracker tracker = new MediaTracker(this);
@@ -43,6 +51,7 @@ public class Court extends JPanel {
 	public void paintComponent(Graphics g) {
 		int PADDING = 0;
 		g.drawImage(courtImage, PADDING, PADDING, 700, 500, null);
+		bball.draw(g);
 	}
 
 	//Checks to see if the angle inputed is between 0 and 90.
@@ -55,18 +64,49 @@ public class Court extends JPanel {
 	
 	//Calculates the x and y velocities*****************************
 	public double calculateXVelocity(double power, double angle) {
-		double xVelocity = power * Math.cos(angle);
+		double xVelocity = power * Math.cos(Math.toRadians(angle));
 		return xVelocity;
 	}
 	
 	public double calculateYVelocity(double power, double angle) {
-		double yVelocity = power * Math.sin(angle);
+		double yVelocity = power * Math.sin(Math.toRadians(angle))*-1;
 		return yVelocity;
 	}
 	//**************************************************************
 	// Shoots the basketball
-	public void shoot(double angle, double power) {
-		bball.setyPosition(bball.getyPosition() + bball.getyVelocity()*time + .5*ACCERLERATIONY*Math.pow(time, 2));
+	public void shoot() {
+		//timer.start();
+		numberOfIterations = 0;
+		madeShot = false;
+		shootHelper(numberOfIterations*(1.0/10.0));		//
+	}
+	public void shootHelper(double time) {
+		repaint();
+		if(Math.abs(bball.getxPosition() - hoop.getPositionX()) < 10 && Math.abs(bball.getyPosition() - hoop.getPositionY()) < 10){
+			System.out.println("Made basket");
+			madeShot = true;
+			timer.stop();
+		}
+		else if(bball.getxPosition() - hoop.getPositionX() > 0 || bball.getyPosition() >= 470){
+			System.out.println("Missed the hoop");
+			timer.stop();
+		}
+		else{
+			bball.setyPosition(Basketball.getBallPositionY1() + bball.getyVelocity()*time + .5*ACCERLERATIONY*Math.pow(time, 2));
+			bball.setxPosition(Basketball.getBallPositionX1() + bball.getxVelocity()*time);
+			numberOfIterations++;
+			shootHelper(numberOfIterations*(1.0/10.0));
+
+		}
+	}
+	
+	private class TimerListener implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			repaint();
+			shootHelper(numberOfIterations*(1.0/10.0));
+		}
 		
 	}
 	

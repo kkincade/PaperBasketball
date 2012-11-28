@@ -1,6 +1,7 @@
 package tests;
 
 import junit.framework.Assert;
+import game.Basketball;
 import game.Court;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -42,8 +43,8 @@ public class testGame {
 		double power = court.getPower();
 		double xVelocity = court.getBball().getxVelocity();
 		double yVelocity = court.getBball().getyVelocity();
-		double expectedXVelocity = 5 * Math.cos(45);
-		double expectedYVelocity = 5 * Math.sin(45);
+		double expectedXVelocity = 5 * Math.cos(Math.toRadians(45));
+		double expectedYVelocity = 5 * Math.sin(Math.toRadians(45))*-1;
 		
 		Assert.assertEquals(xVelocity, expectedXVelocity);
 		Assert.assertEquals(yVelocity, expectedYVelocity);
@@ -54,8 +55,8 @@ public class testGame {
 		power = court.getPower();
 		xVelocity = court.getBball().getxVelocity();
 		yVelocity = court.getBball().getyVelocity();
-		expectedXVelocity = 8 * Math.cos(80);
-		expectedYVelocity = 8 * Math.sin(80);
+		expectedXVelocity = 8 * Math.cos(Math.toRadians(80));
+		expectedYVelocity = 8 * Math.sin(Math.toRadians(80))*-1;
 		
 		Assert.assertEquals(xVelocity, expectedXVelocity);
 		Assert.assertEquals(yVelocity, expectedYVelocity);
@@ -66,8 +67,8 @@ public class testGame {
 		power = court.getPower();
 		xVelocity = court.getBball().getxVelocity();
 		yVelocity = court.getBball().getyVelocity();
-		expectedXVelocity = 2 * Math.cos(90);
-		expectedYVelocity = 2 * Math.sin(90);
+		expectedXVelocity = 2 * Math.cos(Math.toRadians(90));
+		expectedYVelocity = 2 * Math.sin(Math.toRadians(90))*-1;
 		
 		Assert.assertEquals(xVelocity, expectedXVelocity);
 		Assert.assertEquals(yVelocity, expectedYVelocity);
@@ -75,72 +76,57 @@ public class testGame {
 	
 	
 	@Test
-	//Tests angle that should result in a made basket.
+	//Tests angle and power that should result in a made basket.
 	public void testMakeBasket() {
-		court.setPower(70/Math.sqrt(2));
-		court.getBball().setLaunchAngle(45);
-		court.shoot(court.getBball().getLaunchAngle(), court.getPower());
+		court.getBball().setLaunchAngle(72);
+		court.setPower(65);
+		court.shoot();
 		Assert.assertTrue(court.isMadeShot());
 		
-		court.setPower(35/Math.cos(60));
-		court.getBball().setLaunchAngle(60);
-		court.shoot(court.getBball().getLaunchAngle(), court.getPower());
+		court.getBball().setxPosition(Basketball.getBallPositionX1());
+		court.getBball().setyPosition(Basketball.getBallPositionY1());
+		court.getBball().setLaunchAngle(45);
+		court.setPower(55);
+		court.shoot();
 		Assert.assertTrue(court.isMadeShot());
 	}
 	
 	@Test
-	//Tests various coordinates of basketball
-	public void testBallTrajectory() {
+	//Tests angle and power that should result in a missed basket
+	public void testMissedBasket() {
+		court.getBball().setxPosition(Basketball.getBallPositionX1());
+		court.getBball().setyPosition(Basketball.getBallPositionY1());
+		court.getBball().setLaunchAngle(55);
+		court.setPower(30);
+		court.shoot();
+		Assert.assertFalse(court.isMadeShot());
 		
-		//Time 2, Power 5, Angle 45
-		court.getBball().setxPosition(100);
-		court.getBball().setyPosition(court.getHoop().getPositionY());
-		court.getBball().setxVelocity((5 * Math.sqrt(2)) / 2);
-		court.getBball().setyVelocity((5 * Math.sqrt(2)) / 2);
+		court.getBball().setxPosition(Basketball.getBallPositionX1());
+		court.getBball().setyPosition(Basketball.getBallPositionY1());
+		court.getBball().setLaunchAngle(90);
+		court.setPower(70);
+		court.shoot();
+		Assert.assertFalse(court.isMadeShot());
 		
-		double ballXLocation = court.getBball().calcPositionX(2);
-		double ballYLocation = court.getBball().calcPositionY(2);
+		court.getBball().setxPosition(Basketball.getBallPositionX1());
+		court.getBball().setyPosition(Basketball.getBallPositionY1());
+		court.getBball().setLaunchAngle(40);
+		court.setPower(70);
+		court.shoot();
+		Assert.assertFalse(court.isMadeShot());
 		
-		double ballXLocationExpected = 100 + court.getBball().getxVelocity() * 2;
-		double ballYLocationExpected = court.getHoop().getPositionY() + court.getBball().getyVelocity() * 2 + (.5 * (9.81) * 4);
-		
-		Assert.assertEquals(ballXLocationExpected, ballXLocation);
-		Assert.assertEquals(ballYLocationExpected, ballYLocation);
-		
-		//Time 4, Power 1, Angle 80
-		court.getBball().setxPosition(100);
-		court.getBball().setyPosition(court.getHoop().getPositionY());
-		court.getBball().setxVelocity((1*Math.cos(80)));
-		court.getBball().setyVelocity(1*Math.sin(80));
-		
-		ballXLocation = court.getBball().calcPositionX(4);
-		ballYLocation = court.getBball().calcPositionY(4);
-		
-		ballXLocationExpected = 100 + court.getBball().getxVelocity() * 4;
-		ballYLocationExpected = court.getHoop().getPositionY() + court.getBball().getyVelocity() * 4 + (.5 * (9.81) * 16);
-		
-		Assert.assertEquals(ballXLocationExpected, ballXLocation);
-		Assert.assertEquals(ballYLocationExpected, ballYLocation);
-		
-		//Time 3, Power 10, Angle 30
-		court.getBball().setxPosition(100);
-		court.getBball().setyPosition(court.getHoop().getPositionY());
-		court.getBball().setxVelocity((10*Math.cos(30)));
-		court.getBball().setyVelocity(10*Math.sin(30));
-		
-		ballXLocation = court.getBball().calcPositionX(3);
-		ballYLocation = court.getBball().calcPositionY(3);
-		
-		ballXLocationExpected = 100 + court.getBball().getxVelocity() * 3;
-		ballYLocationExpected = court.getHoop().getPositionY() + court.getBball().getyVelocity() * 3 + (.5 * (9.81) * 9);
-		
-		Assert.assertEquals(ballXLocationExpected, ballXLocation);
-		Assert.assertEquals(ballYLocationExpected, ballYLocation);
+		court.getBball().setxPosition(Basketball.getBallPositionX1());
+		court.getBball().setyPosition(Basketball.getBallPositionY1());
+		court.getBball().setLaunchAngle(65);
+		court.setPower(30);
+		court.shoot();
+		Assert.assertFalse(court.isMadeShot());
 	}
 	
 	@Test
 	//Tests if player wins game
 	public void testWin() {	
 		Assert.assertTrue(court.checkWin(10));
+		
 	}
 }

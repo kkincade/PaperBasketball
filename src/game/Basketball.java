@@ -1,18 +1,20 @@
 package game;
 
+import java.awt.Color;
+import java.awt.Graphics;
+
 public class Basketball {
-	private double time;
 	private double xPosition;
 	private double yPosition;
 	private double xVelocity;
 	private double yVelocity;
 	private double launchAngle;
-	private static final double BALL_POSITION_X1 = 408;
-	private static final double BALL_POSITION_Y1 = 434;
-	private static final double BALL_POSITION_X2 = 508;
-	private static final double BALL_POSITION_Y2 = 429;
-	private static final double BALL_POSITION_X3 = 178;
-	private static final double BALL_POSITION_Y3 = 447;
+	private static final double BALL_POSITION_X1 = 401;
+	private static final double BALL_POSITION_Y1 = 384;
+	private static final double BALL_POSITION_X2 = 501;
+	private static final double BALL_POSITION_Y2 = 379;
+	private static final double BALL_POSITION_X3 = 171;
+	private static final double BALL_POSITION_Y3 = 397;
 	
 	
 	//Default Constructor
@@ -20,7 +22,11 @@ public class Basketball {
 		xPosition = BALL_POSITION_X1;
 		yPosition = BALL_POSITION_Y1;
 		launchAngle = 0.0;
-		time = 0;
+	}
+	
+	public void draw(Graphics g){
+		g.setColor(Color.cyan);
+		g.fillOval((int) xPosition, (int) yPosition, 20, 20);
 	}
 	
 	public double calcPositionX(double time) {
@@ -32,14 +38,6 @@ public class Basketball {
 	}
 
 	//* Getters and Setters********************************************
-	public double getTime() {
-		return time;
-	}
-
-	public void setTime(double time) {
-		this.time = time;
-	}
-
 	public double getxPosition() {
 		return xPosition;
 	}
@@ -78,5 +76,29 @@ public class Basketball {
 
 	public void setLaunchAngle(double launchAngle) {
 		this.launchAngle = launchAngle;
+	}
+
+	public static double getBallPositionX1() {
+		return BALL_POSITION_X1;
+	}
+
+	public static double getBallPositionY1() {
+		return BALL_POSITION_Y1;
+	}
+
+	public static double getBallPositionX2() {
+		return BALL_POSITION_X2;
+	}
+
+	public static double getBallPositionY2() {
+		return BALL_POSITION_Y2;
+	}
+
+	public static double getBallPositionX3() {
+		return BALL_POSITION_X3;
+	}
+
+	public static double getBallPositionY3() {
+		return BALL_POSITION_Y3;
 	}
 }

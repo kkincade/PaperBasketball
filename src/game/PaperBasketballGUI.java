@@ -58,6 +58,9 @@ public class PaperBasketballGUI extends JFrame implements MouseListener {
 	public static void main(String[] args) {
 		PaperBasketballGUI pbGUI = new PaperBasketballGUI();
 		pbGUI.setVisible(true);
+		pbGUI.court.getBball().setLaunchAngle(60);
+		pbGUI.court.setPower(70);
+		pbGUI.court.shoot();
 	}
 	
 	
@@ -77,13 +80,13 @@ public class PaperBasketballGUI extends JFrame implements MouseListener {
 	} 
 	public void mouseEntered(MouseEvent event)
 	{ 
-		System.out.println("Mouse entered. x = "
-				+ event.getX() + " y = " + event.getY());
+//		System.out.println("Mouse entered. x = "
+//				+ event.getX() + " y = " + event.getY());
 	} 
 	public void mouseExited(MouseEvent event)
 	{ 
-		System.out.println("Mouse exited. x = "
-				+ event.getX() + " y = " + event.getY());
+//		System.out.println("Mouse exited. x = "
+//				+ event.getX() + " y = " + event.getY());
 	}
 
 }
