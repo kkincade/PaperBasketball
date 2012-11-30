@@ -89,12 +89,13 @@ public class GameControlPanel extends JPanel {
 		@Override
 		public void stateChanged(ChangeEvent e) {
 			if (e.getSource() == angleSlider) {
-				pbGUI.getCourt().getBball().setAngle(angleSlider.getValue());
-				System.out.println("angle = " + pbGUI.getCourt().getBball().getAngle());
+				pbGUI.getCourt().setAngle(angleSlider.getValue());
+				System.out.println("angle = " + pbGUI.getCourt().getAngle());
 			} else if (e.getSource() == powerSlider) {
 				pbGUI.getCourt().setPower(powerSlider.getValue());
 				System.out.println("power = " + powerSlider.getValue());
 			}
+			pbGUI.getCourt().repaint();
 		}
 	}
 }

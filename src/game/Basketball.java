@@ -15,7 +15,7 @@ public class Basketball extends JPanel {
 	private int Yi;
 	private double Vx;
 	private double Vy;
-	private int angle;
+	//private int angle;
 	private static final int MIDCOURT_X = 401;
 	private static final int MIDCOURT_Y = 384;
 	private Image basketballScaled;
@@ -26,7 +26,7 @@ public class Basketball extends JPanel {
 		y = MIDCOURT_Y;
 		Xi = MIDCOURT_X;
 		Yi = MIDCOURT_Y;
-		angle = 45;
+		//angle = 45;
 		
 		//This adds the image of the basketball - throws an exception if it can't find the file
 		MediaTracker tracker = new MediaTracker(this);
@@ -77,13 +77,13 @@ public class Basketball extends JPanel {
 		this.Vy = Vy;
 	}
 
-	public int getAngle() {
-		return angle;
-	}
-
-	public void setAngle(int angle) {
-		this.angle = angle;
-	}
+//	public int getAngle() {
+//		return angle;
+//	}
+//
+//	public void setAngle(int angle) {
+//		this.angle = angle;
+//	}
 
 	public static int getMidcourtX() {
 		return MIDCOURT_X;

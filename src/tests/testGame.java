@@ -19,16 +19,16 @@ public class testGame {
 	public void testCorrectAngleInput() {
 		
 		//Test 100 being an incorrect launch angle
-		court.getBball().setAngle(100);
-		Assert.assertFalse(court.checkAngle(court.getBball().getAngle()));
+		court.setAngle(100);
+		Assert.assertFalse(court.checkAngle(court.getAngle()));
 		
 		//Test -10 being an incorrect launch angle
-		court.getBball().setAngle(-10);
-		Assert.assertFalse(court.checkAngle(court.getBball().getAngle()));
+		court.setAngle(-10);
+		Assert.assertFalse(court.checkAngle(court.getAngle()));
 		
 		//Test 70 being a correct launch angle
-		court.getBball().setAngle(70);
-		Assert.assertTrue(court.checkAngle(court.getBball().getAngle()));
+		court.setAngle(70);
+		Assert.assertTrue(court.checkAngle(court.getAngle()));
 	}
 	
 	@Test
@@ -37,7 +37,7 @@ public class testGame {
 	public void testInitialVelocities() {
 
 		//Power of 5 and an angle of 45
-		court.getBball().setAngle(45);
+		court.setAngle(45);
 		court.setPower(5);
 		double xVelocity = court.getBball().getVelocityX();
 		double yVelocity = court.getBball().getVelocityY();
@@ -48,7 +48,8 @@ public class testGame {
 		Assert.assertEquals(yVelocity, expectedYVelocity);
 		
 		//Power of 8 and an angle of 80
-		court.getBball().setAngle(80);
+		court.setAngle(80);
+		court.setPower(8);
 		xVelocity = court.getBball().getVelocityX();
 		yVelocity = court.getBball().getVelocityY();
 		expectedXVelocity = 8 * Math.cos(Math.toRadians(80));
@@ -58,7 +59,7 @@ public class testGame {
 		Assert.assertEquals(yVelocity, expectedYVelocity);
 		
 		//Power of 2 and an angle of 90
-		court.getBball().setAngle(90);
+		court.setAngle(90);
 		court.setPower(2);
 		xVelocity = court.getBball().getVelocityX();
 		yVelocity = court.getBball().getVelocityY();
@@ -72,14 +73,14 @@ public class testGame {
 	@Test
 	//Tests angle and power that should result in a made basket.
 	public void testMakeBasket() {
-		court.getBball().setAngle(72);
+		court.setAngle(72);
 		court.setPower(65);
 		court.shoot();
 		Assert.assertTrue(court.isMadeShot());
 		
 		court.getBball().setPositionX(Basketball.getMidcourtX());
 		court.getBball().setPositionY(Basketball.getMidcourtY());
-		court.getBball().setAngle(45);
+		court.setAngle(45);
 		court.setPower(55);
 		court.shoot();
 		Assert.assertTrue(court.isMadeShot());
@@ -90,28 +91,28 @@ public class testGame {
 	public void testMissedBasket() {
 		court.getBball().setPositionX(Basketball.getMidcourtX());
 		court.getBball().setPositionY(Basketball.getMidcourtY());
-		court.getBball().setAngle(55);
+		court.setAngle(55);
 		court.setPower(30);
 		court.shoot();
 		Assert.assertFalse(court.isMadeShot());
 		
 		court.getBball().setPositionX(Basketball.getMidcourtX());
 		court.getBball().setPositionY(Basketball.getMidcourtY());
-		court.getBball().setAngle(90);
+		court.setAngle(90);
 		court.setPower(70);
 		court.shoot();
 		Assert.assertFalse(court.isMadeShot());
 		
 		court.getBball().setPositionX(Basketball.getMidcourtX());
 		court.getBball().setPositionY(Basketball.getMidcourtY());
-		court.getBball().setAngle(40);
+		court.setAngle(40);
 		court.setPower(70);
 		court.shoot();
 		Assert.assertFalse(court.isMadeShot());
 		
 		court.getBball().setPositionX(Basketball.getMidcourtX());
 		court.getBball().setPositionY(Basketball.getMidcourtY());
-		court.getBball().setAngle(65);
+		court.setAngle(65);
 		court.setPower(30);
 		court.shoot();
 		Assert.assertFalse(court.isMadeShot());

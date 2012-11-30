@@ -1,5 +1,6 @@
 package game;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.MediaTracker;
@@ -26,12 +27,14 @@ public class Court extends JPanel {
 	private int numberOfIterations;
 	private static final double A_Y = 9.81;
 	private Timer timer;
+	private int angle;
 	
 	/** Constructor */
 	public Court() {
 		super();
 		timer = new Timer(15, new TimerListener());
 		numberOfIterations = 0;
+		angle = 45;
 		madeShot = false;
 		scoreboard = new Scoreboard();
 		bball = new Basketball();
@@ -55,6 +58,18 @@ public class Court extends JPanel {
 		int PADDING = 0;
 		g.drawImage(courtImage, PADDING, PADDING, 700, 500, null);
 		bball.draw(g);
+		if(numberOfIterations == 0){
+			drawTrajectory(g);
+			System.out.println("draw trajetory called");
+		}
+	}
+	
+	/** Draws the first three trajectory positions of the ball */
+	public void drawTrajectory(Graphics g) {
+		g.setColor(Color.black);
+		g.fillOval( (int) (getBball().getXi() + bball.getVelocityX()*.5), (int) (getBball().getYi() + bball.getVelocityY()*.5 + .5 * (A_Y) * Math.pow(.5, 2)), 10, 10);
+		g.fillOval((int) (getBball().getXi() + bball.getVelocityX()*1), (int) (getBball().getYi() + bball.getVelocityY()*1 + .5 * (A_Y) * Math.pow(1, 2)), 10, 10);
+		g.fillOval((int) (getBball().getXi() + bball.getVelocityX()*1.5), (int) (getBball().getYi() + bball.getVelocityY()*1.5 + .5 * (A_Y) * Math.pow(1.5, 2)), 10, 10);
 	}
 
 	/** Checks to see if the angle inputed is between 0 and 90. */
@@ -88,10 +103,10 @@ public class Court extends JPanel {
 //*****************************************************************************************************************************
 	/** Initializes madeShot to false, starts the timer, and then calls the shootHelper function*/
 	public void shoot() {
-		numberOfIterations = 0;
+		//numberOfIterations = 0;
 		madeShot = false;
-		getBball().setVelocityX(calculateXVelocity(getPower(), getBball().getAngle()));
-		getBball().setVelocityY(calculateYVelocity(getPower(), getBball().getAngle()));
+		getBball().setVelocityX(calculateXVelocity(getPower(), angle));
+		getBball().setVelocityY(calculateYVelocity(getPower(), angle));
 		timer.start();
 		//shootHelper(numberOfIterations*(1.0/10.0));
 	}
@@ -103,12 +118,14 @@ public class Court extends JPanel {
 			madeShot = true;
 			//TODO increment score
 			chooseNewBallLocation();
+			numberOfIterations = 0;
 			repaint();
 			timer.stop();
 		}
 		else if(bball.getPositionX() - hoop.getPositionX() > 0 || bball.getPositionY() >= 470){
 			System.out.println("Missed the hoop");
 			chooseNewBallLocation();
+			numberOfIterations = 0;
 			repaint();
 			timer.stop();
 		}
@@ -178,8 +195,18 @@ public class Court extends JPanel {
 
 	public void setPower(double power) {
 		this.power = power;
-		bball.setVelocityX(calculateXVelocity(power, bball.getAngle()));
-		bball.setVelocityY(calculateYVelocity(power, bball.getAngle()));
+		bball.setVelocityX(calculateXVelocity(power, angle));
+		bball.setVelocityY(calculateYVelocity(power, angle));
+	}
+
+	public int getAngle() {
+		return angle;
+	}
+
+	public void setAngle(int angle) {
+		this.angle = angle;
+		bball.setVelocityX(calculateXVelocity(power, angle));
+		bball.setVelocityY(calculateYVelocity(power, angle));
 	}
 
 	public Hoop getHoop() {
