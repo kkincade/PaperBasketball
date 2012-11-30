@@ -77,8 +77,8 @@ public class testGame {
 		court.shoot();
 		Assert.assertTrue(court.isMadeShot());
 		
-		court.getBball().setPositionX(Basketball.getBallPositionX1());
-		court.getBball().setPositionY(Basketball.getBallPositionY1());
+		court.getBball().setPositionX(Basketball.getMidcourtX());
+		court.getBball().setPositionY(Basketball.getMidcourtY());
 		court.getBball().setAngle(45);
 		court.setPower(55);
 		court.shoot();
@@ -88,29 +88,29 @@ public class testGame {
 	@Test
 	//Tests angle and power that should result in a missed basket
 	public void testMissedBasket() {
-		court.getBball().setPositionX(Basketball.getBallPositionX1());
-		court.getBball().setPositionY(Basketball.getBallPositionY1());
+		court.getBball().setPositionX(Basketball.getMidcourtX());
+		court.getBball().setPositionY(Basketball.getMidcourtY());
 		court.getBball().setAngle(55);
 		court.setPower(30);
 		court.shoot();
 		Assert.assertFalse(court.isMadeShot());
 		
-		court.getBball().setPositionX(Basketball.getBallPositionX1());
-		court.getBball().setPositionY(Basketball.getBallPositionY1());
+		court.getBball().setPositionX(Basketball.getMidcourtX());
+		court.getBball().setPositionY(Basketball.getMidcourtY());
 		court.getBball().setAngle(90);
 		court.setPower(70);
 		court.shoot();
 		Assert.assertFalse(court.isMadeShot());
 		
-		court.getBball().setPositionX(Basketball.getBallPositionX1());
-		court.getBball().setPositionY(Basketball.getBallPositionY1());
+		court.getBball().setPositionX(Basketball.getMidcourtX());
+		court.getBball().setPositionY(Basketball.getMidcourtY());
 		court.getBball().setAngle(40);
 		court.setPower(70);
 		court.shoot();
 		Assert.assertFalse(court.isMadeShot());
 		
-		court.getBball().setPositionX(Basketball.getBallPositionX1());
-		court.getBball().setPositionY(Basketball.getBallPositionY1());
+		court.getBball().setPositionX(Basketball.getMidcourtX());
+		court.getBball().setPositionY(Basketball.getMidcourtY());
 		court.getBball().setAngle(65);
 		court.setPower(30);
 		court.shoot();

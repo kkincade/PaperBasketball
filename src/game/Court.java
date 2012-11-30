@@ -7,6 +7,7 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.net.URL;
+import java.util.Random;
 
 
 import javax.swing.JPanel;
@@ -29,14 +30,14 @@ public class Court extends JPanel {
 	/** Constructor */
 	public Court() {
 		super();
-		timer = new Timer(25, new TimerListener());
+		timer = new Timer(15, new TimerListener());
 		numberOfIterations = 0;
 		madeShot = false;
 		scoreboard = new Scoreboard();
 		bball = new Basketball();
 		player = new Player();
 		hoop = new Hoop();
-		setPower(0);
+		setPower(50);
 		
 		//This adds the image of the court - throws an exception if it can't find the file
 		MediaTracker tracker = new MediaTracker(this);
@@ -87,9 +88,11 @@ public class Court extends JPanel {
 //*****************************************************************************************************************************
 	/** Initializes madeShot to false, starts the timer, and then calls the shootHelper function*/
 	public void shoot() {
-		timer.start();
 		numberOfIterations = 0;
 		madeShot = false;
+		getBball().setVelocityX(calculateXVelocity(getPower(), getBball().getAngle()));
+		getBball().setVelocityY(calculateYVelocity(getPower(), getBball().getAngle()));
+		timer.start();
 		//shootHelper(numberOfIterations*(1.0/10.0));
 	}
 	
@@ -98,20 +101,35 @@ public class Court extends JPanel {
 		if(Math.abs(bball.getPositionX() - hoop.getPositionX()) < 10 && Math.abs(bball.getPositionY() - hoop.getPositionY()) < 10){
 			System.out.println("Made basket");
 			madeShot = true;
+			//TODO increment score
+			chooseNewBallLocation();
+			repaint();
 			timer.stop();
 		}
 		else if(bball.getPositionX() - hoop.getPositionX() > 0 || bball.getPositionY() >= 470){
 			System.out.println("Missed the hoop");
+			chooseNewBallLocation();
+			repaint();
 			timer.stop();
 		}
 		else{
-			bball.setPositionY(Basketball.getBallPositionY1() + bball.getVelocityY()*time + .5 * (A_Y) * Math.pow(time, 2));
-			bball.setPositionX(Basketball.getBallPositionX1() + bball.getVelocityX()*time);
+			bball.setPositionY((int) (getBball().getYi() + bball.getVelocityY()*time + .5 * (A_Y) * Math.pow(time, 2)));
+			bball.setPositionX((int) (getBball().getXi() + bball.getVelocityX()*time));
 			numberOfIterations++;
 			//shootHelper(numberOfIterations*(1.0/10.0));
 		}
 	}
 	
+	public void chooseNewBallLocation() {
+		Random rand = new Random();
+		int randomX = rand.nextInt(450) + 175;
+		int randomY = rand.nextInt(100) + 300;
+		getBball().setPositionX(randomX);	//sets x position to anywhere between 100-550
+		getBball().setPositionY(randomY);	//sets y position to anywhere between 300-400
+		getBball().setXi(randomX);
+		getBball().setYi(randomY);
+		repaint();
+	}
 	/** This timer calls the shootHelper function every 25ms and repaints the board*/
 	private class TimerListener implements ActionListener {
 		@Override
