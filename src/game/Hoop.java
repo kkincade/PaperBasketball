@@ -1,8 +1,8 @@
 package game;
 
 public class Hoop {
-	private static final int POSITION_X = 649;
-	private static final int POSITION_Y = 342;
+	private static final int POSITION_X = 646;
+	private static final int POSITION_Y = 333;
 	
 	public Hoop() {
 		super();

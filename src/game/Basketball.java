@@ -41,6 +41,7 @@ public class Basketball extends JPanel {
 	
 	public void draw(Graphics g){
 		g.drawImage(basketballScaled, (int) x, (int) y, null);
+		repaint();
 	}
 	
 

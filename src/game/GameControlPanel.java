@@ -79,7 +79,6 @@ public class GameControlPanel extends JPanel {
 		public void actionPerformed(ActionEvent e) {
 			if (e.getSource() == shootButton) {
 				pbGUI.getCourt().shoot();
-				System.out.println("Shooting");
 			}
 		}
 	}
@@ -90,10 +89,8 @@ public class GameControlPanel extends JPanel {
 		public void stateChanged(ChangeEvent e) {
 			if (e.getSource() == angleSlider) {
 				pbGUI.getCourt().setAngle(angleSlider.getValue());
-				System.out.println("angle = " + pbGUI.getCourt().getAngle());
 			} else if (e.getSource() == powerSlider) {
 				pbGUI.getCourt().setPower(powerSlider.getValue());
-				System.out.println("power = " + powerSlider.getValue());
 			}
 			pbGUI.getCourt().repaint();
 		}

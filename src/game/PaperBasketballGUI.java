@@ -10,12 +10,14 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 
 @SuppressWarnings("serial")
 public class PaperBasketballGUI extends JFrame implements MouseListener {
 	private JMenuItem exit;
 	private Court court;
 	private GameControlPanel gameControlPanel;
+	
 	//Constructor for the JFrame
 	public PaperBasketballGUI() {
 		court = new Court();
@@ -33,7 +35,7 @@ public class PaperBasketballGUI extends JFrame implements MouseListener {
 		add(gameControlPanel, BorderLayout.SOUTH);
 	}
 
-	//* GUI components **************************************************
+	/**GUI components ******************************************/
 	/** Creates File menu */
 	private JMenu createFileMenu() {
 		JMenu menu = new JMenu("File"); 
@@ -58,32 +60,22 @@ public class PaperBasketballGUI extends JFrame implements MouseListener {
 	public static void main(String[] args) {
 		PaperBasketballGUI pbGUI = new PaperBasketballGUI();
 		pbGUI.setVisible(true);
+		JOptionPane.showMessageDialog(pbGUI, "Score 10 baskets in a minute to win! Press OK to start the clock!", "Paper Basketball", JOptionPane.INFORMATION_MESSAGE);
+		//TODO start the timer
+		//startTimer();
 	}
 
 
 	/**Mouse Listener********************************************/
-	public void mousePressed(MouseEvent event) { 
-		System.out.println("Mouse pressed. x = "
-				+ event.getX() + " y = " + event.getY());
-	} 
-	public void mouseReleased(MouseEvent event) { 
-		System.out.println("Mouse released. x = "
-				+ event.getX() + " y = " + event.getY());
-	} 
 	public void mouseClicked(MouseEvent event) { 
 		System.out.println("Mouse clicked. x = "
 				+ event.getX() + " y = " + event.getY());
 	} 
-	public void mouseEntered(MouseEvent event) { 
-		//		System.out.println("Mouse entered. x = "
-		//				+ event.getX() + " y = " + event.getY());
-	} 
-	public void mouseExited(MouseEvent event){ 
-		//		System.out.println("Mouse exited. x = "
-		//				+ event.getX() + " y = " + event.getY());
-	}
+	public void mousePressed(MouseEvent event) {} 
+	public void mouseReleased(MouseEvent event) {} 
+	public void mouseEntered(MouseEvent event) {} 
+	public void mouseExited(MouseEvent event){}
 
-	
 	/**Getters and Setters***************************************/
 	public Court getCourt() {
 		return court;

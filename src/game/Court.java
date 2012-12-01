@@ -1,10 +1,8 @@
 package game;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
-import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.MediaTracker;
 import java.awt.Toolkit;
@@ -12,19 +10,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.net.URL;
 import java.util.Random;
-
-
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
 @SuppressWarnings("serial")
 public class Court extends JPanel {
-	private Player whoseTurn;
 	private ScoreboardPanel scoreboard;
 	private Basketball bball;
-	private Player player;
 	private Hoop hoop;
 	private double power;
 	private Image courtImage;
@@ -34,27 +27,32 @@ public class Court extends JPanel {
 	private Timer timer;
 	private int angle;
 	private JLabel scoreLabel;
+	private JLabel timeLabel;
 	
 	/** Constructor */
 	public Court() {
 		super();
 		scoreLabel = new JLabel("0");
+		timeLabel = new JLabel("60");
 		timer = new Timer(15, new TimerListener());
 		numberOfIterations = 0;
 		angle = 45;
 		madeShot = false;
 		scoreboard = new ScoreboardPanel();
 		bball = new Basketball();
-		player = new Player();
 		hoop = new Hoop();
 		setPower(50);
-//		setLayout(new GridLayout(0,1));
 		setLayout(null);
-		add(scoreLabel);
-		scoreLabel.setLocation(25,10);
-		scoreLabel.setFont(new Font("Serif", Font.BOLD, 16));
+		
+		scoreLabel.setLocation(445,30);
+		scoreLabel.setFont(new Font("Serif", Font.BOLD, 25));
 		scoreLabel.setSize(100,100);
-		//add(scoreboard);
+		timeLabel.setLocation(560, 30);
+		timeLabel.setFont(new Font("Serif", Font.BOLD, 25));
+		timeLabel.setSize(100,100);
+		
+		add(scoreLabel);
+		add(timeLabel);
 		
 		//This adds the image of the court - throws an exception if it can't find the file
 		MediaTracker tracker = new MediaTracker(this);
@@ -78,15 +76,16 @@ public class Court extends JPanel {
 		}
 	}
 	
-	/** Draws the first three trajectory positions of the ball */
+	/** Draws the three trajectory positions of the ball */
 	public void drawTrajectory(Graphics g) {
 		g.setColor(Color.black);
-		g.fillOval( (int) (getBball().getXi() + bball.getVelocityX()*1), (int) (getBball().getYi() + bball.getVelocityY()*1 + .5 * (A_Y) * Math.pow(1, 2)), 10, 10);
-		g.fillOval((int) (getBball().getXi() + bball.getVelocityX()*2), (int) (getBball().getYi() + bball.getVelocityY()*2 + .5 * (A_Y) * Math.pow(2, 2)), 10, 10);
-		g.fillOval((int) (getBball().getXi() + bball.getVelocityX()*3), (int) (getBball().getYi() + bball.getVelocityY()*3 + .5 * (A_Y) * Math.pow(3, 2)), 10, 10);
+		g.drawOval((int) (getBball().getXi() + bball.getVelocityX()*1), (int) (getBball().getYi() + bball.getVelocityY()*1 + .5 * (A_Y) * Math.pow(1, 2)), 5, 5);
+		g.drawOval((int) (getBball().getXi() + bball.getVelocityX()*2), (int) (getBball().getYi() + bball.getVelocityY()*2 + .5 * (A_Y) * Math.pow(2, 2)), 5, 5);
+		g.drawOval((int) (getBball().getXi() + bball.getVelocityX()*3), (int) (getBball().getYi() + bball.getVelocityY()*3 + .5 * (A_Y) * Math.pow(3, 2)), 5, 5);
 	}
 
-	/** Checks to see if the angle inputed is between 0 and 90. */
+	/** Checks to see if the angle inputed is between 0 and 90. Only used in tests because we 
+	 * changed our implementation*/
 	public boolean checkAngle(double angle) {
 		if (angle > 90 || angle < 0) {
 			return false;
@@ -117,20 +116,19 @@ public class Court extends JPanel {
 //*****************************************************************************************************************************
 	/** Initializes madeShot to false, starts the timer, and then calls the shootHelper function*/
 	public void shoot() {
-		//numberOfIterations = 0;
 		madeShot = false;
 		getBball().setVelocityX(calculateXVelocity(getPower(), angle));
 		getBball().setVelocityY(calculateYVelocity(getPower(), angle));
 		timer.start();
-		//shootHelper(numberOfIterations*(1.0/10.0));
 	}
 	
+	/** Constantly checks to see if the basketball has made or missed the basket */
 	public void shootHelper(double time) {
 		repaint();
 		if(Math.abs(bball.getPositionX() - hoop.getPositionX()) < 10 && Math.abs(bball.getPositionY() - hoop.getPositionY()) < 10){
 			System.out.println("Made basket");
 			madeShot = true;
-			//TODO increment score
+			//Increments the score in the scoreboard
 			scoreboard.setScore(scoreboard.getScore()+1);
 			String stringScore = "" + scoreboard.getScore();
 			scoreLabel.setText(stringScore);
@@ -150,15 +148,15 @@ public class Court extends JPanel {
 			bball.setPositionY((int) (getBball().getYi() + bball.getVelocityY()*time + .5 * (A_Y) * Math.pow(time, 2)));
 			bball.setPositionX((int) (getBball().getXi() + bball.getVelocityX()*time));
 			numberOfIterations++;
-			//shootHelper(numberOfIterations*(1.0/10.0));
 		}
 	}
 	
+	/** Chooses a random ball location on the court */
 	public void chooseNewBallLocation() {
 		Random rand = new Random();
-		int randomX = rand.nextInt(450) + 175;
+		int randomX = rand.nextInt(300) + 175;
 		int randomY = rand.nextInt(100) + 300;
-		getBball().setPositionX(randomX);	//sets x position to anywhere between 100-550
+		getBball().setPositionX(randomX);	//sets x position to anywhere between 100-475
 		getBball().setPositionY(randomY);	//sets y position to anywhere between 300-400
 		getBball().setXi(randomX);
 		getBball().setYi(randomY);
@@ -174,36 +172,12 @@ public class Court extends JPanel {
 	}
 	
 //* Getters and Setters *****************************************************************************************************
-	public Player getWhoseTurn() {
-		return whoseTurn;
-	}
-
-//	public ScoreboardPanel getScoreboard() {
-//		return scoreboard;
-//	}
-//
-//	public void setScoreboard(ScoreboardPanel scoreboard) {
-//		this.scoreboard = scoreboard;
-//	}
-
 	public Basketball getBball() {
 		return bball;
 	}
 
 	public void setBball(Basketball bball) {
 		this.bball = bball;
-	}
-
-	public Player getPlayer() {
-		return player;
-	}
-
-	public void setPlayer(Player player) {
-		this.player = player;
-	}
-
-	public void setWhoseTurn(Player whoseTurn) {
-		this.whoseTurn = whoseTurn;
 	}
 
 	public double getPower() {
