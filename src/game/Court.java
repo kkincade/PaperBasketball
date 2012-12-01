@@ -1,7 +1,10 @@
 package game;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.MediaTracker;
 import java.awt.Toolkit;
@@ -11,13 +14,15 @@ import java.net.URL;
 import java.util.Random;
 
 
+import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
 @SuppressWarnings("serial")
 public class Court extends JPanel {
 	private Player whoseTurn;
-	private Scoreboard scoreboard;
+	private ScoreboardPanel scoreboard;
 	private Basketball bball;
 	private Player player;
 	private Hoop hoop;
@@ -28,19 +33,28 @@ public class Court extends JPanel {
 	private static final double A_Y = 9.81;
 	private Timer timer;
 	private int angle;
+	private JLabel scoreLabel;
 	
 	/** Constructor */
 	public Court() {
 		super();
+		scoreLabel = new JLabel("0");
 		timer = new Timer(15, new TimerListener());
 		numberOfIterations = 0;
 		angle = 45;
 		madeShot = false;
-		scoreboard = new Scoreboard();
+		scoreboard = new ScoreboardPanel();
 		bball = new Basketball();
 		player = new Player();
 		hoop = new Hoop();
 		setPower(50);
+//		setLayout(new GridLayout(0,1));
+		setLayout(null);
+		add(scoreLabel);
+		scoreLabel.setLocation(25,10);
+		scoreLabel.setFont(new Font("Serif", Font.BOLD, 16));
+		scoreLabel.setSize(100,100);
+		//add(scoreboard);
 		
 		//This adds the image of the court - throws an exception if it can't find the file
 		MediaTracker tracker = new MediaTracker(this);
@@ -57,19 +71,19 @@ public class Court extends JPanel {
 	public void paintComponent(Graphics g) {
 		int PADDING = 0;
 		g.drawImage(courtImage, PADDING, PADDING, 700, 500, null);
+		scoreboard.draw(g);
 		bball.draw(g);
 		if(numberOfIterations == 0){
 			drawTrajectory(g);
-			System.out.println("draw trajetory called");
 		}
 	}
 	
 	/** Draws the first three trajectory positions of the ball */
 	public void drawTrajectory(Graphics g) {
 		g.setColor(Color.black);
-		g.fillOval( (int) (getBball().getXi() + bball.getVelocityX()*.5), (int) (getBball().getYi() + bball.getVelocityY()*.5 + .5 * (A_Y) * Math.pow(.5, 2)), 10, 10);
-		g.fillOval((int) (getBball().getXi() + bball.getVelocityX()*1), (int) (getBball().getYi() + bball.getVelocityY()*1 + .5 * (A_Y) * Math.pow(1, 2)), 10, 10);
-		g.fillOval((int) (getBball().getXi() + bball.getVelocityX()*1.5), (int) (getBball().getYi() + bball.getVelocityY()*1.5 + .5 * (A_Y) * Math.pow(1.5, 2)), 10, 10);
+		g.fillOval( (int) (getBball().getXi() + bball.getVelocityX()*1), (int) (getBball().getYi() + bball.getVelocityY()*1 + .5 * (A_Y) * Math.pow(1, 2)), 10, 10);
+		g.fillOval((int) (getBball().getXi() + bball.getVelocityX()*2), (int) (getBball().getYi() + bball.getVelocityY()*2 + .5 * (A_Y) * Math.pow(2, 2)), 10, 10);
+		g.fillOval((int) (getBball().getXi() + bball.getVelocityX()*3), (int) (getBball().getYi() + bball.getVelocityY()*3 + .5 * (A_Y) * Math.pow(3, 2)), 10, 10);
 	}
 
 	/** Checks to see if the angle inputed is between 0 and 90. */
@@ -117,6 +131,9 @@ public class Court extends JPanel {
 			System.out.println("Made basket");
 			madeShot = true;
 			//TODO increment score
+			scoreboard.setScore(scoreboard.getScore()+1);
+			String stringScore = "" + scoreboard.getScore();
+			scoreLabel.setText(stringScore);
 			chooseNewBallLocation();
 			numberOfIterations = 0;
 			repaint();
@@ -161,13 +178,13 @@ public class Court extends JPanel {
 		return whoseTurn;
 	}
 
-	public Scoreboard getScoreboard() {
-		return scoreboard;
-	}
-
-	public void setScoreboard(Scoreboard scoreboard) {
-		this.scoreboard = scoreboard;
-	}
+//	public ScoreboardPanel getScoreboard() {
+//		return scoreboard;
+//	}
+//
+//	public void setScoreboard(ScoreboardPanel scoreboard) {
+//		this.scoreboard = scoreboard;
+//	}
 
 	public Basketball getBball() {
 		return bball;

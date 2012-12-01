@@ -16,15 +16,14 @@ public class PaperBasketballGUI extends JFrame implements MouseListener {
 	private JMenuItem exit;
 	private Court court;
 	private GameControlPanel gameControlPanel;
-
 	//Constructor for the JFrame
 	public PaperBasketballGUI() {
 		court = new Court();
 		gameControlPanel = new GameControlPanel(this);
-
 		//GUI
 		setSize(new Dimension(720, 625));
 		setTitle("Paper Basketball!");
+		setLayout(new BorderLayout());
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
