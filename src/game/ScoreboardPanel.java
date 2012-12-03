@@ -22,7 +22,7 @@ public class ScoreboardPanel extends JPanel{
 	public ScoreboardPanel() {
 		super();
 		score = 0;
-		timeRemaining = 90;
+		timeRemaining = 59;
 		x = TOPCORNER_X;
 		y = TOPCORNER_Y;
 		
@@ -37,6 +37,13 @@ public class ScoreboardPanel extends JPanel{
 		try {
 			tracker.waitForID(0);
 		} catch (InterruptedException e) { return; }
+	}
+	
+	/**Decrements time */
+	public void decrementTime(){
+		if (timeRemaining >= 0) {
+			timeRemaining--;
+		}
 	}
 
 	/** Draws the scoreboard and logo to the screen */

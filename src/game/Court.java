@@ -107,7 +107,7 @@ public class Court extends JPanel {
 	
 	/**If the players score is ten or above, they won the game. */
 	public boolean checkWin(int score) {
-		if (score >= 10) {
+		if (score >= 8) {
 			return true;
 		}
 		return false;
@@ -214,5 +214,17 @@ public class Court extends JPanel {
 
 	public void setMadeShot(boolean madeShot) {
 		this.madeShot = madeShot;
+	}
+
+	public ScoreboardPanel getScoreboard() {
+		return scoreboard;
+	}
+
+	public void setScoreboard(ScoreboardPanel scoreboard) {
+		this.scoreboard = scoreboard;
+	}
+
+	public JLabel getTimeLabel() {
+		return timeLabel;
 	}
 }
